@@ -66,10 +66,20 @@ class User {
   String get name => "${"".capitalize(_firstName)} ${"".capitalize(_lastName)}";
 
   @override
+  int get hashCode {
+    int result = 17;
+    result = 31 * result + _firstName.hashCode;
+    result = 31 * result + _lastName.hashCode;
+    result = 31 * result + phone.hashCode;
+    result = 31 * result + email.hashCode;
+    return result;
+  }
+
+  @override
   bool operator ==(Object object) {
-    if (object == null) {
-      return false;
-    }
+    if (object == this) return true;
+    if (object is! User) return false;
+    //if (object == null) return false;
     if (object is User) {
       return _firstName == object._firstName &&
           _lastName == object._lastName &&
