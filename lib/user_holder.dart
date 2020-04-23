@@ -24,7 +24,7 @@ class UserHolder {
   }
 
   User registerUserByPhone(String fullName, String phone) {
-    User user = User.withPhone(name: fullName, phone: phone);
+    User user = User(name: fullName, phone: phone);
     String login = user.login;
     if (users.containsKey(login)) {
       user = users[login];
@@ -35,12 +35,27 @@ class UserHolder {
   }
 
   User registerUserByEmail(String fullName, String email) {
-    User user = User.withEmail(name: fullName, email: email);
+    User user = User(name: fullName, email: email);
     String login = user.login;
     if (users.containsKey(login)) {
       throw Exception("A user with this email already exists");
     } else {
       users[login] = user;
+    }
+    return user;
+  }
+
+  void setFriends(String login, List<User> friends) {
+    User user = users[login];
+    if (user != null) {
+      user.friends.addAll(friends);
+    }
+  }
+
+  User findUserInFriends(String fullName, User user) {
+    String login = fullName; // на самом деле первым параметром передается login
+    if (!users[login].friends.contains(user)) {
+      throw Exception('${user.login} is not a friend of the login');
     }
     return user;
   }

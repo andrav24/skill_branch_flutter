@@ -2,7 +2,7 @@ import '../string_util.dart';
 
 enum LoginType { email, phone }
 
-class User {
+class User with UserUtils {
   String email;
   String phone;
 
@@ -25,6 +25,12 @@ class User {
 
   factory User({String name, String phone, String email}) {
     if (name.isEmpty) throw Exception("User name is empty");
+    if (email == null && phone == null)
+      throw Exception('Email and Phone both null');
+    if (email == null && phone != null)
+      return User._withPhone(name: name, phone: phone);
+    if (phone == null && email != null)
+      return User._withEmail(name: name, email: email);
     return User._(
         firstName: _getFirstName(name),
         lastName: _getLastName(name),
@@ -32,14 +38,14 @@ class User {
         email: checkEmail(email));
   }
 
-  factory User.withPhone({String name, String phone}) {
+  factory User._withPhone({String name, String phone}) {
     return User._(
         firstName: _getFirstName(name),
         lastName: _getLastName(name),
         phone: checkPhone(phone));
   }
 
-  factory User.withEmail({String name, String email}) {
+  factory User._withEmail({String name, String email}) {
     return User._(
         firstName: _getFirstName(name),
         lastName: _getLastName(name),

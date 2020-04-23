@@ -85,7 +85,6 @@ void main() {
     });
   });
 
-/*
   test('setFriends', () {
     User user = User(
         name: "Dan Tot", phone: "+15750761449", email: "dan.tot@yandex.ru");
@@ -142,7 +141,7 @@ void main() {
           throwsA(isA<Exception>()));
     });
   });
-
+/*
   test('Test: UserHolder.importUsers()', () {
     User user = User(
         name: "Dan Tot",
@@ -160,5 +159,6 @@ void main() {
     expect(users[0].login, user.login);
     expect(users[0].email, user.email);
     expect(users[0].phone, user.phone);
-  });*/
+  });
+  */
 }
