@@ -18,4 +18,30 @@ class UserHolder {
 
     //print(user == user2);
   }
+
+  User getUserByLogin(String login) {
+    return users[login];
+  }
+
+  User registerUserByPhone(String fullName, String phone) {
+    User user = User.withPhone(name: fullName, phone: phone);
+    String login = user.login;
+    if (users.containsKey(login)) {
+      user = users[login];
+    } else {
+      users[login] = user;
+    }
+    return user;
+  }
+
+  User registerUserByEmail(String fullName, String email) {
+    User user = User.withEmail(name: fullName, email: email);
+    String login = user.login;
+    if (users.containsKey(login)) {
+      throw Exception("A user with this email already exists");
+    } else {
+      users[login] = user;
+    }
+    return user;
+  }
 }

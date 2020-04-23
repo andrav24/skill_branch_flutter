@@ -25,9 +25,6 @@ class User {
 
   factory User({String name, String phone, String email}) {
     if (name.isEmpty) throw Exception("User name is empty");
-    if (phone.isEmpty || email.isEmpty)
-      throw Exception("Phone or email is empty");
-
     return User._(
         firstName: _getFirstName(name),
         lastName: _getLastName(name),
@@ -35,16 +32,31 @@ class User {
         email: checkEmail(email));
   }
 
+  factory User.withPhone({String name, String phone}) {
+    return User._(
+        firstName: _getFirstName(name),
+        lastName: _getLastName(name),
+        phone: checkPhone(phone));
+  }
+
+  factory User.withEmail({String name, String email}) {
+    return User._(
+        firstName: _getFirstName(name),
+        lastName: _getLastName(name),
+        email: checkEmail(email));
+  }
+
   // это не геттер!!!
   static String _getFirstName(String userName) => userName.split(" ")[0];
   static String _getLastName(String userName) => userName.split(" ")[1];
+
   static String checkPhone(String phone) {
+    if (phone == null) {
+      throw Exception("Enter don't empty phone number");
+    }
     String pattern = r"^(?:[+0])?[0-9]{11}";
     phone = phone.replaceAll(RegExp("[^+\\d]"), "");
-
-    if (phone == null || phone.isEmpty) {
-      throw Exception("Enter don't empty phone number");
-    } else if (!RegExp(pattern).hasMatch(phone)) {
+    if (!RegExp(pattern).hasMatch(phone)) {
       throw Exception(
           "Enter valid phone number starting with a + and containing 11 digits");
     }
@@ -52,8 +64,13 @@ class User {
   }
 
   static String checkEmail(String email) {
-    if (email == null || email.isEmpty) {
+    if (email == null) {
       throw Exception("Enter don't empty email");
+    }
+    String pattern =
+        r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+    if (!RegExp(pattern).hasMatch(email)) {
+      throw Exception("Enter valid email");
     }
     return email;
   }
@@ -77,7 +94,7 @@ class User {
 
   @override
   bool operator ==(Object object) {
-    if (object == this) return true;
+    if (identical(this, object)) return true;
     if (object is! User) return false;
     //if (object == null) return false;
     if (object is User) {
@@ -85,6 +102,7 @@ class User {
           _lastName == object._lastName &&
           (phone == object.phone || email == object.email);
     }
+    return false;
   }
 
   void addFriends(Iterable<User> newFriend) {
@@ -102,6 +120,9 @@ class User {
   String get userInfo => '''
     name: $name
     email: $email
+    phone: $phone
+    type: $_type
+    login: $login
     firstname: $_firstName
     lastname: $_lastName
     friends: ${friends.toList()}

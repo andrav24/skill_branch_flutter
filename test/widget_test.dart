@@ -1,7 +1,7 @@
+import 'package:FlutterGalleryApp/models/user.dart';
 import 'package:flutter_test/flutter_test.dart'
     show expect, group, isA, setUp, tearDownAll, test, throwsA;
 
-import '../lib/models/user.dart';
 import '../lib/user_holder.dart';
 
 void main() {
@@ -24,7 +24,7 @@ void main() {
     expect("Skill Branch", holder.users["kaparray@gmail.com"].name);
   });
 
-  /*test('getUserByLogin', () {
+  test('getUserByLogin', () {
     User user = User(
         name: "Dan Tot", phone: "+15750761449", email: "dan.tot@yandex.ru");
     holder.users[user.login] = user;
@@ -45,8 +45,18 @@ void main() {
       expect(user.email, holder.getUserByLogin(user.login).email);
     });
 
-    test('registerUserByPhone', () {
+    test('registerUserByPhone with Exception', () {
       expect(() => holder.registerUserByPhone("John Ray", "+9-733 524-085"),
+          throwsA(isA<Exception>()));
+    });
+
+    test('registerUserByPhone with Exception', () {
+      expect(() => holder.registerUserByPhone("John Ray", null),
+          throwsA(isA<Exception>()));
+    });
+
+    test('registerUserByPhone with Exception', () {
+      expect(() => holder.registerUserByPhone("John Ray", ""),
           throwsA(isA<Exception>()));
     });
   });
@@ -61,12 +71,12 @@ void main() {
       expect(user.email, holder.getUserByLogin(user.login).email);
     });
 
-    test('Email is not valid registerUserByPhone', () {
+    test('Email is not valid registerUserByEmail', () {
       expect(() => holder.registerUserByEmail("John Ray", "dfdsag"),
           throwsA(isA<Exception>()));
     });
 
-    test('Exception(A user with this email already exists) registerUserByPhone',
+    test('Exception(A user with this email already exists) registerUserByEmail',
         () {
       holder.registerUserByEmail("John Ray", "ray1550@yahoo.net");
 
@@ -75,6 +85,7 @@ void main() {
     });
   });
 
+/*
   test('setFriends', () {
     User user = User(
         name: "Dan Tot", phone: "+15750761449", email: "dan.tot@yandex.ru");
