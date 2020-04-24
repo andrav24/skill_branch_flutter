@@ -61,6 +61,17 @@ class UserHolder {
   }
 
   List<User> importUsers(List<String> str) {
-    return List<User>();
+    List<User> usersFromCsv = [];
+    String name = "";
+    String email = "";
+    String phone = "";
+    str.forEach((data) {
+      List<String> userFromCsv = data.split(";");
+      name = userFromCsv[0].trim();
+      email = userFromCsv[1].trim();
+      phone = userFromCsv[2].trim();
+      usersFromCsv.add(User(name: name, phone: phone, email: email));
+    });
+    return usersFromCsv;
   }
 }

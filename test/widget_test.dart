@@ -155,8 +155,8 @@ void main() {
       """,
     ]);
 
-    /*expect(users[0].login, user.login);
+    expect(users[0].login, user.login);
     expect(users[0].email, user.email);
-    expect(users[0].phone, user.phone);*/
+    expect(users[0].phone, user.phone);
   });
 }
