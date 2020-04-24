@@ -59,4 +59,8 @@ class UserHolder {
     }
     return user;
   }
+
+  List<User> importUsers(List<String> str) {
+    return List<User>();
+  }
 }
